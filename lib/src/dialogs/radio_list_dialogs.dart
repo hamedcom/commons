@@ -7,13 +7,10 @@ class __RadioListDialog<T extends Data> extends StatefulWidget {
   final Set<T> dataSet;
   final Data selectedItem;
   final Function(T) onSubmit;
+  final bool isArabic;
 
-  __RadioListDialog(
-    this.title,
-    this.dataSet,
-    this.onSubmit, {
-    this.selectedItem,
-  });
+  __RadioListDialog(this.title, this.dataSet, this.onSubmit, this.isArabic,
+      {this.selectedItem});
 
   @override
   ___RadioListDialogState createState() => ___RadioListDialogState<T>();
@@ -56,7 +53,6 @@ class ___RadioListDialogState<T extends Data> extends State<__RadioListDialog> {
             widget.title,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontWeight: FontWeight.bold,
               fontSize: 20,
             ),
           ),
@@ -84,12 +80,11 @@ class ___RadioListDialogState<T extends Data> extends State<__RadioListDialog> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
             FlatButton(
-              onPressed: () {
-                if (widget.onSubmit != null) widget.onSubmit(_selectedItem);
-                pop(context); // To close the dialog
-              },
-              child: Text("Apply"),
-            ),
+                onPressed: () {
+                  if (widget.onSubmit != null) widget.onSubmit(_selectedItem);
+                  pop(context); // To close the dialog
+                },
+                child: widget.isArabic ? Text("تطبيق") : Text("Apply")),
           ],
         )
       ],
@@ -123,6 +118,7 @@ radioListDialog<T extends Data>(
   BuildContext context,
   String title,
   Set<T> dataSet,
+  bool isArabic,
   Function(T) onSubmit, {
   Data selectedItem,
   autoClose = true,
@@ -136,6 +132,7 @@ radioListDialog<T extends Data>(
         title,
         dataSet,
         onSubmit,
+        isArabic,
         selectedItem: selectedItem,
       ),
     ),
